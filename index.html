@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta Atrás Disneyland Paris ✨</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS: El estilo de la página */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #001f54; /* Color de respaldo */
+            /* Imagen de fondo inspirada en el castillo */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                              url('bg.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            max-width: 90%;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            color: #f4b1c2; /* Rosa pastel Disney */
+            text-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            font-weight: 300;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+        }
+
+        #countdown {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .time-block {
+            background: rgba(0, 39, 144, 0.6);
+            padding: 20px;
+            border-radius: 15px;
+            min-width: 100px;
+            border-bottom: 4px solid #f4b1c2;
+        }
+
+        .time-block span {
+            font-size: 3rem;
+            font-weight: 600;
+            display: block;
+            line-height: 1;
+        }
+
+        .time-block p {
+            font-size: 0.9rem;
+            margin-top: 5px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .target-date {
+            margin-top: 30px;
+            font-size: 1rem;
+            background: #f4b1c2;
+            color: #001f54;
+            display: inline-block;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* Animación sencilla para los números */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        #days { color: #fff; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>¡Marxem a Disney!!</h1>        
+
+        <div id="countdown">
+            <div class="time-block">
+                <span id="days">00</span>
+                <p>Dies</p>
+            </div>
+            <div class="time-block">
+                <span id="hours">00</span>
+                <p>Hores</p>
+            </div>
+            <div class="time-block">
+                <span id="minutes">00</span>
+                <p>Minuts</p>
+            </div>
+            <div class="time-block">
+                <span id="seconds">00</span>
+                <p>Segons</p>
+            </div>
+        </div>
+
+        <div class="target-date">20 de Juny del 2026</div>
+    </div>
+
+    <script>
+        // JAVASCRIPT: La lógica del tiempo
+        const targetDate = new Date("June 20, 2026 09:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            // Cálculos de tiempo
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            // Mostrar resultados
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+							
+			
+            // Si llegamos a la fecha
+            if (difference < 0) {
+                clearInterval(interval);
+                document.querySelector(".container").innerHTML = "<h1>✨ ¡Avui es el Dia! ✨</h1><h2>Som-hi tots!!!</h2>";
+            }
+        }
+
+        // Ejecutar cada segundo
+        const interval = setInterval(updateCountdown, 1000);
+        updateCountdown(); // Ejecución inicial
+    </script>
+
+</body>
+</html>
